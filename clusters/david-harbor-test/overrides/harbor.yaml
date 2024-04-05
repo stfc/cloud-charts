@@ -1,0 +1,4 @@
+database:
+  external:
+    username: "cloud_harbor_registry_dev_user"
+    coreDatabase: "cloud_harbor_registry_dev"

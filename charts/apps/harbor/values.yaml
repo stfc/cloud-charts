@@ -1,0 +1,30 @@
+expose:
+  # TODO switch to ingress
+  type: loadBalancer
+  tls:
+    enabled: false
+loadBalancer:
+  IP: ""
+database:
+  type: external
+  external:
+    host: ""
+    port: "5432"
+    username: ""
+    password: ""
+    coreDatabase: ""
+    sslmode: "disable"
+
+persistence:
+  enabled: true
+  imageChartStorage:
+    disableredirect: false
+    type: s3
+    s3:
+      bucket: bucket-name
+      accesskey: ""
+      secretkey: ""
+      regionendpoint: ceph-gw5.gridpp.rl.ac.uk
+      encrypt: true
+      secure: true
+      skipverify: false

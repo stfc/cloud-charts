@@ -11,7 +11,7 @@ openstack-cluster:
     nodeLabels:
       longhorn.demo.io/longhorn-storage-node: true
 
-  cloudCredentialsSecretName: david-cloud-credentials
+  cloudCredentialsSecretName: david-prod-cloud-credentials
 
   addons:
     ingress:
