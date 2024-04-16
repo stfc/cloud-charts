@@ -13,3 +13,10 @@ apps:
     namespace: harbor
     additionalValueFiles:
       - clusters/david-harbor-test/overrides/harbor.yaml
+
+  - name: longhorn
+    disableAutomated: false
+    chartName: longhorn
+    namespace: longhorn-system
+    additionalValueFiles:
+      - clusters/david-harbor-test/overrides/longhorn.yaml
