@@ -20,7 +20,7 @@ notary:
   enabled: false
 
 persistence:
-  enabled: true
+  enabled: false
   # These are stored externally, so disable dynamic provisioning
   registry:
     storageClass: "-"
