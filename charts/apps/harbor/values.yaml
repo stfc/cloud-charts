@@ -17,14 +17,33 @@ database:
 
 persistence:
   enabled: true
+  # These are stored externally, so disable dynamic provisioning
+  registry:
+    storageClass: "-"
+  chartmuseum:
+    storageClass: "-"
+  database:
+    storageClass: "-"
+
+  # Use longhorn by default, as everything important is backed by an external DB and S3
+  # so we don't need to worry about data persistence beyond using the local nodes
+  jobservice:
+    storageClass: "longhorn"
+  redis:
+    storageClass: "longhorn"
+  trivy:
+    storageClass: "longhorn"
+
   imageChartStorage:
     disableredirect: false
     type: s3
     s3:
-      bucket: bucket-name
+      bucket: "harbor"
       accesskey: ""
       secretkey: ""
-      regionendpoint: ceph-gw5.gridpp.rl.ac.uk
+      # ceph-gw5.gridpp.rl.ac.uk - Prod
+      # ceph-dev-gw3.gridpp.rl.ac.uk - Dev
+      regionendpoint: ""
       encrypt: true
       secure: true
       skipverify: false

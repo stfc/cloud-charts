@@ -2,3 +2,11 @@ database:
   external:
     username: "cloud_harbor_registry_dev_user"
     coreDatabase: "cloud_harbor_registry_dev"
+
+persistence:
+  imageChartStorage:
+    s3:
+      bucket: "harborHA"
+      accessKey: "c344d7c0b1ef46bebf0169266702d255"
+      regionendpoint: "http://ceph-dev-gw3.gridpp.rl.ac.uk"
+      

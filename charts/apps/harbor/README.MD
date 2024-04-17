@@ -56,4 +56,7 @@ Within the secret the following fields are required:
 s3-credentials
 --------------
 
-TODO
+- Using an appropriate service account and project issue credentials as per https://stfc.atlassian.net/wiki/spaces/CLOUDKB/pages/377421872/S3+On+OpenStack
+- Create a bucket if required, and copy data in from an existing source
+- Add the bucket name (if not `harbor`), accessKey and regionendpoint into the override. The `secretKey` must not be entered.
+- Use the parameter overrides in ArgoCD to inject the `secretKey`. In future chart versions we will switch to secretRef instead.
