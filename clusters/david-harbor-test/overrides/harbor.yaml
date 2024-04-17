@@ -9,4 +9,6 @@ persistence:
       bucket: "harborHA"
       accessKey: "c344d7c0b1ef46bebf0169266702d255"
       regionendpoint: "http://ceph-dev-gw3.gridpp.rl.ac.uk"
-      
+      encrypt: false
+      secure: false
+      skipverify: true
