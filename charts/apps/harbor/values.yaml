@@ -1,53 +1,66 @@
-expose:
-  # TODO switch to ingress
-  type: loadBalancer
-  tls:
-    enabled: false
-loadBalancer:
-  IP: ""
-database:
-  type: external
-  external:
-    host: ""
-    port: "5432"
-    username: ""
-    password: ""
-    coreDatabase: ""
-    sslmode: "disable"
+harbor:
+  externalURL: ""
 
-notary:
-  # Disable Notary as we don't use it
-  enabled: false
+  internalTLS:
+    enabled: true
 
-persistence:
-  enabled: false
-  # These are stored externally, so disable dynamic provisioning
-  registry:
-    storageClass: "-"
-  chartmuseum:
-    storageClass: "-"
+  expose:
+    type: ingress
+    tls:
+      enabled: true
+
+      # Requires certbot - for development override this to auto
+      # and set the secretName to empty
+      certSource: secret
+      secret:
+        secretName: "letsencrypt-prod"
+
+    ingress:
+      hosts:
+        core: ""  # Domain name for Harbor
+      className: "nginx"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
   database:
-    storageClass: "-"
+    type: external
+    external:
+      host: ""
+      port: "5432"
+      username: ""
+      password: ""
+      coreDatabase: ""
 
-  # Use longhorn by default, as everything important is backed by an external DB and S3
-  # so we don't need to worry about data persistence beyond using the local nodes
-  jobservice:
-    storageClass: "longhorn"
-  redis:
-    storageClass: "longhorn"
-  trivy:
-    storageClass: "longhorn"
+  notary:
+    # Disable Notary as we don't use it
+    enabled: false
 
-  imageChartStorage:
-    disableredirect: false
-    type: s3
-    s3:
-      bucket: "harbor"
-      accesskey: ""
-      secretkey: ""
-      # ceph-gw5.gridpp.rl.ac.uk - Prod
-      # ceph-dev-gw3.gridpp.rl.ac.uk - Dev
-      regionendpoint: ""
-      encrypt: true
-      secure: true
-      skipverify: false
+  persistence:
+    enabled: false
+    # These are stored externally, so disable dynamic provisioning
+    registry:
+      storageClass: "-"
+    chartmuseum:
+      storageClass: "-"
+    database:
+      storageClass: "-"
+    jobservice:
+      storageClass: "-"
+    redis:
+      storageClass: "-"
+    trivy:
+      storageClass: "-"
+
+    imageChartStorage:
+      disableredirect: false
+      type: s3
+      s3:
+        bucket: "harbor"
+        accesskey: ""
+        secretkey: ""
+        # ceph-gw5.gridpp.rl.ac.uk - Prod
+        # ceph-dev-gw3.gridpp.rl.ac.uk - Dev
+        regionendpoint: ""
+        encrypt: true
+        secure: true
+        skipverify: false

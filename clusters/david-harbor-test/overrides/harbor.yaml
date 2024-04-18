@@ -1,14 +1,27 @@
-database:
-  external:
-    username: "cloud_harbor_registry_dev_user"
-    coreDatabase: "cloud_harbor_registry_dev"
+harbor:  
+  externalURL: "https://test.harbor.stfc.ac.uk"
+  expose:
+    tls:
+      certSource: auto
+      secret:
+        secretName: ""
 
-persistence:
-  imageChartStorage:
-    s3:
-      bucket: "harborHA"
-      accessKey: "c344d7c0b1ef46bebf0169266702d255"
-      regionendpoint: "http://ceph-dev-gw3.gridpp.rl.ac.uk"
-      encrypt: false
-      secure: false
-      skipverify: true
+    ingress:
+      hosts:
+        core: "test.harbor.stfc.ac.uk"  # Domain name for Harbor
+
+  database:
+    external:
+      username: "cloud_harbor_registry_dev_user"
+      coreDatabase: "cloud_harbor_registry_dev"
+      sslmode: "disable"
+
+  persistence:
+    imageChartStorage:
+      s3:
+        bucket: "harborHA"
+        accessKey: "c344d7c0b1ef46bebf0169266702d255"
+        regionendpoint: "http://ceph-dev-gw3.gridpp.rl.ac.uk"
+        encrypt: false
+        secure: false
+        skipverify: true

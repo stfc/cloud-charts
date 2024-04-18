@@ -6,5 +6,5 @@ version: 0.1.0
 dependencies:
   - name: harbor
     # Harbor v2.5.2 for migration to HA deployment
-    version: 1.9.2
+    version: 1.9.6
     repository: https://helm.goharbor.io
