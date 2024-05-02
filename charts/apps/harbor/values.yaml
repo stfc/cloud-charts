@@ -13,14 +13,14 @@ harbor:
       # and set the secretName to empty
       certSource: secret
       secret:
-        secretName: "letsencrypt-prod"
+        secretName: "harbor-tls"
 
     ingress:
       hosts:
-        core: ""  # Domain name for Harbor
+        core: "" # Domain name for Harbor
       className: "nginx"
       annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-prod"
+        cert-manager.io/cluster-issuer: "self-signed"
 
   database:
     type: external

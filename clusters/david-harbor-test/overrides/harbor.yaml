@@ -1,14 +1,10 @@
-harbor:  
+harbor:
   externalURL: "https://test.harbor.stfc.ac.uk"
   expose:
-    tls:
-      certSource: auto
-      secret:
-        secretName: ""
-
     ingress:
       hosts:
-        core: "test.harbor.stfc.ac.uk"  # Domain name for Harbor
+        core: "test.harbor.stfc.ac.uk" # Domain name for Harbor
+        cert-manager.io/cluster-issuer: "letsencrypt-staging"
 
   database:
     external:
