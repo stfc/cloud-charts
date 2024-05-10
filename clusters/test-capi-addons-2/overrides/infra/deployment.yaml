@@ -1,5 +1,15 @@
 openstack-cluster:
 
+  nodeGroups:
+    - name: default-md-0
+      machineCount: 2
+    - name: md-1
+      machineCount: 1
+      machineFlavor: l3.tiny
+    - name: md-2
+      machineCount: 1
+      machineFlavor: l3.nano
+
   cloudCredentialsSecretName: test-capi-addons-2-cloud-credentials
 
   addons:
