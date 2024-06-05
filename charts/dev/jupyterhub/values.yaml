@@ -1,0 +1,46 @@
+# Local values
+nfs:
+  enabled: false
+  ip: 
+
+jupyterhub:
+  singleuser:
+    storage:
+      # Required for PyTorch
+      extraVolumes:
+        - name: shm-volume
+          emptyDir:
+            medium: Memory
+      extraVolumeMounts:
+        - name: shm-volume
+          mountPath: /dev/shm
+
+      type: dynamic
+      capacity: 10Gi
+      dynamic:
+        storageClass: longhorn
+
+    # Default profile, this is what the placeholders will use
+    cpu:
+      limit: 2
+      guarantee: 0.05
+    memory:
+      limit: 1.8G
+      guarantee: 1.8G
+
+    profileList:
+      - display_name: "Default: Minimal environment"
+        description: |
+          For small jobs and prototyping: 2 CPUs, 1.5GB RAM and no GPU. This is the default, and will usually start in ~2 minutes.
+        kubespawner_override:
+          image: jupyter/minimal-notebook
+        default: true
+      - display_name: "Datascience environment"
+        kubespawner_override:
+          image: jupyter/datascience-notebook
+        description: |
+          For small jobs and prototyping: 2 CPUs, 1.5GB RAM and no GPU.
+        default: false
+
+  cull:
+    timeout: 432000 # seconds == 5 day

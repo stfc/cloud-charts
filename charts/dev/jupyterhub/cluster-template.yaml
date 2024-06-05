@@ -1,0 +1,65 @@
+jupyterhub:
+  proxy:
+    https:
+      enabled: true
+      hosts:
+        - # Not Set
+      letsencrypt:
+        contactEmail: # Not Set
+    service:
+      loadBalancerIP: # Not Set - this should be an dedicated ingress point for JHub
+
+  singleuser:
+    # If per-cluster storage is required
+    storage:
+      # Required for PyTorch
+      extraVolumes:
+        - name: shm-volume
+          emptyDir:
+            medium: Memory
+      # Example of how to mount a persistent volume - e.g. a RO NFS share
+      #   - name: training-materials
+      #     persistentVolumeClaim:
+      #       claimName: training-materials
+      extraVolumeMounts:
+        - name: shm-volume
+          mountPath: /dev/shm
+      type: dynamic
+      capacity: 10Gi
+      dynamic:
+        storageClass: longhorn
+
+    # Default profile, this is what the placeholders will use
+    cpu:
+      limit: 2
+      guarantee: 0.05
+    memory:
+      limit: 1.8G
+      guarantee: 1.8G
+
+    profileList:
+      - display_name: "Some Custom Template"
+        description: |
+          Example of a custom profile
+        kubespawner_override:
+        image: harbor.stfc.ac.uk/stfc-cloud/some-image:latest
+        image_pull_policy: Always
+        cpu_limit: 8
+        cpu_guarantee: 8
+        mem_limit: "8G"
+        mem_guarantee: "8G"
+        # Add a GPU
+        tolerations:
+          - key: nvidia.com/gpu
+            operator: Equal
+            effect: NoSchedule
+        extra_resource_limits:
+          nvidia.com/gpu: "1"
+        default: true
+      - display_name: "Another Custom Template"
+        kubespawner_override:
+          image: jupyter/datascience-notebook
+        description: |
+          Example of a custom profile two - this is not default
+          and will still give a 2GB image
+        default: false

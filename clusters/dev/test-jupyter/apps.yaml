@@ -1,0 +1,88 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloud-deployed-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/stfc/cloud-deployed-apps.git
+    targetRevision: folder_flows
+    path: clusters/dev/test-jupyter
+  syncPolicy:
+    preserveResourcesOnDeletion: true     
+    automated:
+      prune: false
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+      - CreateNamespace=true
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+    name: management-apps
+    namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+        - name: "argocd"
+          chartName: argocd
+
+          # NOTE: each chart needs a valuesFile for this to work 
+          # so create one for each chart - even if its empty
+          # argocd and all dependencies use the same file "argocd-setup-values.yaml" 
+          valuesFile: ../../../clusters/dev/test-jupyter/argocd-setup-values.yaml
+          namespace: argocd
+
+        - name: "cert-manager"
+          chartName: cert-manager
+          namespace: cert-manager
+          valuesFile: ../../../clusters/dev/test-jupyter/argocd-setup-values.yaml
+
+        - name: jupyterhub
+          chartName: jupyterhub
+          namespace: jupyterhub
+          valuesFile: ../../../clusters/dev/test-jupyter/jupyter-values.yaml
+
+  syncPolicy:
+    preserveResourcesOnDeletion: true 
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: true
+    syncOptions:
+      - CreateNamespace=true
+
+  template:
+      metadata:
+        name: '{{name}}'
+        namespace: argocd
+      spec:
+        project: default
+        source:
+          repoURL: "https://github.com/stfc/cloud-deployed-apps.git"
+          targetRevision: folder_flows
+          path: "charts/dev/{{chartName}}"
+          helm:
+            valueFiles:
+              - "{{valuesFile}}"
+        destination:
+            server: https://kubernetes.default.svc
+            namespace: "{{namespace}}"
+        
+        # apps are easy to deploy - so we can cascade delete them
+        syncPolicy:
+          preserveResourcesOnDeletion: false  
+          automated:
+            prune: true
+            selfHeal: true
+            allowEmpty: true
+          syncOptions:
+            - CreateNamespace=true
