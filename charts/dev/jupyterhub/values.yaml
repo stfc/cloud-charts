@@ -4,6 +4,11 @@ nfs:
   ip: 
 
 jupyterhub:
+  prePuller:
+    hook:
+      # https://github.com/jupyterhub/zero-to-jupyterhub-k8s/issues/1621
+      enabled: false
+
   singleuser:
     storage:
       # Required for PyTorch
