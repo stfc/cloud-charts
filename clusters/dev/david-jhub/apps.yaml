@@ -13,7 +13,6 @@ spec:
     targetRevision: Port_jhub
     path: clusters/dev/david-jhub
   syncPolicy:
-    preserveResourcesOnDeletion: true     
     automated:
       prune: false
       selfHeal: true
@@ -53,12 +52,6 @@ spec:
 
   syncPolicy:
     preserveResourcesOnDeletion: true 
-    automated:
-      prune: true
-      selfHeal: true
-      allowEmpty: true
-    syncOptions:
-      - CreateNamespace=true
 
   template:
       metadata:
@@ -79,7 +72,6 @@ spec:
         
         # apps are easy to deploy - so we can cascade delete them
         syncPolicy:
-          preserveResourcesOnDeletion: false  
           automated:
             prune: true
             selfHeal: true
