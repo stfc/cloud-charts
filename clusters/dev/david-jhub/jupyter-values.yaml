@@ -1,0 +1,4 @@
+jupyterhub:
+  proxy:
+    service:
+      loadBalancerIP: "130.246.81.178"
