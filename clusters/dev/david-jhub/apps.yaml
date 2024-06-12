@@ -49,6 +49,10 @@ spec:
           secretsFile: ../../../secrets/dev/david-jhub/jupyterhub-secrets.yaml
           valuesFile: ../../../clusters/dev/david-jhub/jupyter-values.yaml
 
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy
+            
   syncPolicy:
     preserveResourcesOnDeletion: true 
 
