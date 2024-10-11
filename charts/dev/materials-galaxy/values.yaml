@@ -350,11 +350,6 @@ galaxy:
 
 oauth2-proxy:
   # Oauth client configuration specifics
-  config:
-
-    #TODO: make this a secret
-    existingSecret: iris-iam-credentials
-
   extraArgs:
     upstream: "http://{{.Release.Name}}-nginx"
     redirect-url: "https://galaxy.example.com/oauth2/callback"

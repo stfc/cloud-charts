@@ -12,6 +12,9 @@ openstack-cluster:
       # we're running longhorn on this cluster
       # set label so worker nodes can host longhorn volumes
       longhorn.store.nodeselect/longhorn-storage-node: true
+      # we're running manila on this cluster
+      # set label so worker nodes can host manila share volumes
+      manila.store.nodeselect/manila-storage-node: true
 
   addons:
     ingress:
