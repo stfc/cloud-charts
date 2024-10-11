@@ -58,11 +58,10 @@ spec:
             namespace: manila-csi
             valuesFile: ../../../clusters/dev/galaxy/argocd-setup-values.yaml
 
-          # disable galaxy - deploying manually to diagnose duplicate job bug
-          # - name: materials-galaxy
-          #  chartName: materials-galaxy
-          #  namespace: materials-galaxy
-          #  valuesFile: ../../../clusters/dev/galaxy/materials-galaxy-values.yaml
+          - name: materials-galaxy
+            chartName: materials-galaxy
+            namespace: materials-galaxy
+            valuesFile: ../../../clusters/dev/galaxy/materials-galaxy-values.yaml
 
 
   syncPolicy:
@@ -94,11 +93,12 @@ spec:
           allowEmpty: true
         syncOptions:
           - CreateNamespace=true
+          - RespectIgnoreDifferences=true
 
   templatePatch: |
-    {{- if eq .name "manila-csi" }}
       spec:
         ignoreDifferences:
+          {{- if eq .name "manila-csi" }}
           - group: rbac.authorization.k8s.io
             kind: ClusterRole
             name: manila-csi-openstack-manila-csi-controllerplugin
@@ -109,4 +109,10 @@ spec:
             name: manila-csi-openstack-manila-csi-nodeplugin
             jsonPointers:
               - /rules
-    {{- end }}
+          {{- end }}
+          {{- if eq .name "materials-galaxy" }}
+          - group: batch
+            kind: Job
+            jsonPointers:
+              - /status
+          {{- end }}
