@@ -112,9 +112,3 @@ spec:
             jsonPointers:
               - /rules
           {{- end }}
-          {{- if eq .name "materials-galaxy" }}
-          - group: batch
-            kind: Job
-            jsonPointers:
-              - /status
-          {{- end }}

@@ -3,9 +3,10 @@ name: materials-galaxy
 version: 1.0.0
 dependencies:
 # https://github.com/galaxyproject/galaxy-helm
-  - repository: https://raw.githubusercontent.com/CloudVE/helm-charts/master/
+# dev version for testing
+  - repository: https://harbor.stfc.ac.uk/chartrepo/stfc-cloud
     name: galaxy
-    version: 5.17.0
+    version: 5.17.1-dev3
 # https://github.com/oauth2-proxy/manifests/tree/main/helm/oauth2-proxy
   - repository: "https://oauth2-proxy.github.io/manifests"
     name: oauth2-proxy
