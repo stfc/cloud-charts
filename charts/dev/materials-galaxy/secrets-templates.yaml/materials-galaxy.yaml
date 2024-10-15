@@ -26,7 +26,6 @@ galaxy:
     galaxy.yml:
       galaxy:
         # comma spaced list of admin emails
-        admin_users: >-
-          "user1@example.com"
+        admin_users: "user1@example.com"
 
 

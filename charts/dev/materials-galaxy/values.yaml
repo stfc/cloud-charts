@@ -11,6 +11,8 @@ galaxy:
     size: 10Gi
 
   setupJob:
+    annotations:
+      argocd.argoproj.io/sync-options: Prune=false
     ttlSecondsAfterFinished: null
     createDatabase: true
     
