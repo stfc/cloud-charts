@@ -12,7 +12,7 @@ galaxy:
 
   setupJob:
     annotations:
-      argocd.argoproj.io/sync-options: Prune=false
+      argocd.argoproj.io/hook: PreSync
     ttlSecondsAfterFinished: null
     createDatabase: true
     
