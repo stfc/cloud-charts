@@ -1,5 +1,4 @@
 galaxy:
-
   # RBAC is defined by admins once service is up
   rbac:
     enabled: true
@@ -12,7 +11,7 @@ galaxy:
 
   setupJob:
     ttlSecondsAfterFinished: null
-    createDatabase: false
+    createDatabase: true
     
     # Download configuration files and the tools directory from an archive via a job at startup
     # You can enable it to install "default" galaxy tools
@@ -76,8 +75,7 @@ galaxy:
   # standalone db to reduce galaxy memory footprint
   postgresql:
     enabled: true
-
-    deploy: false
+    deploy: true
 
   # do not mount cloud-hosted Galaxy reference data and tools
   refdata:
@@ -336,7 +334,7 @@ galaxy:
   # we need a message queue so galaxy components can talk to each other
   rabbitmq:
     enabled: true
-    deploy: false
+    deploy: true
     persistence:
       storageClassName: longhorn
 

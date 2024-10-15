@@ -11,11 +11,3 @@ dependencies:
   - repository: "https://oauth2-proxy.github.io/manifests"
     name: oauth2-proxy
     version: 7.7.22
-# https://github.com/zalando/postgres-operator/tree/master/charts/postgres-operator
-  - repository: "https://opensource.zalando.com/postgres-operator/charts/postgres-operator"
-    name: postgres-operator
-    version: 1.13.0
-# https://github.com/bitnami/charts/tree/main/bitnami/rabbitmq-cluster-operator
-  - repository: "https://charts.bitnami.com/bitnami"
-    name: rabbitmq-cluster-operator
-    version: 4.3.24
