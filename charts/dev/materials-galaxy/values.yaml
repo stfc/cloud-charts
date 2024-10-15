@@ -11,10 +11,8 @@ galaxy:
     size: 10Gi
 
   setupJob:
-    annotations:
-      argocd.argoproj.io/hook: PostSync
     ttlSecondsAfterFinished: null
-    createDatabase: true
+    createDatabase: false
     
     # Download configuration files and the tools directory from an archive via a job at startup
     # You can enable it to install "default" galaxy tools
