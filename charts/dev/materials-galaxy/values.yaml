@@ -96,8 +96,6 @@ galaxy:
         remote_user_secret: null
 
         # admin user config
-        # comma spaced list of admin emails - need to change this to have admins
-        admin_users: "example@example.com"
         allow_user_deletion: true
         allow_user_impersonation: true
 
