@@ -46,7 +46,7 @@ dashboards:
 nodePools:
   - component: nodes
     replicas: 3
-    diskSize: "10Gi"
+    diskSize: "1Gi"
     persistence:
       pvc:
         accessModes:
