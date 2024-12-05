@@ -3,8 +3,6 @@ opensearch-operator:
   installCRDs: true
 
 clusterName: log-storage
-namespace: opensearch-system
-
 # opensearch and opensearch dashboards version
 # - https://github.com/opensearch-project/OpenSearch/releases
 # - https://github.com/opensearch-project/OpenSearch-Dashboards/releases
