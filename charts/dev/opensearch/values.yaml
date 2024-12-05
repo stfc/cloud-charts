@@ -149,4 +149,3 @@ rolesMapping:
     - "admin"
     - "stfc-cloud/admins"
     description: "Maps admin to all_access"
-  hosts: []
