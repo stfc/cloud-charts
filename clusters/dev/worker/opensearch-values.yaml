@@ -52,6 +52,44 @@ tenants:
     description: "logs for prod/staging k8s clusters"
 
 roles:  
+  dev_user:
+    reserved: false
+    cluster_permissions: []
+    index_permissions:
+    - index_patterns:
+        - "k8s_logs_dev_*_cluster*"
+        - "trivy_logs_dev_*_cluster*"
+      allowed_actions:
+        - "indices:data/write/*"
+        - "indices:data/read/*"
+        - "indices:admin/*"
+    tenant_permissions: 
+      tenant_patterns:
+        - cloud_dev
+      allowed_actions:
+        # so to allow creating dashboards
+        - kibana_all_write
+  
+  prod_user:
+    reserved: false
+    cluster_permissions: []
+    index_permissions:
+    - index_patterns:
+        - "k8s_logs_prod_*_cluster*"
+        - "trivy_logs_prod_*_cluster*" 
+      allowed_actions:
+        - "indices:data/write/*"
+        - "indices:data/read/*"
+        - "indices:admin/*"
+    tenant_permissions: 
+      tenant_patterns:
+        - cloud
+      allowed_actions:
+        # so to allow creating dashboards
+        - kibana_all_write
+
+
+  # setup separate writers for each cluster environment to write logs to
   write_only_dev:
     reserved: false
     cluster_permissions: []
@@ -68,24 +106,6 @@ roles:
       tenant_patterns:
         - cloud_dev
   
-  read_only_dev:
-    reserved: false
-    cluster_permissions: []
-    index_permissions:
-    - index_patterns:
-        - "k8s_logs_dev_*_cluster*"
-        - "trivy_logs_dev_*_cluster*"
-      allowed_actions:
-        - "indices:data/write/*",
-        - "indices:data/read/*",
-        - "indices:admin/*"
-    tenant_permissions: 
-      tenant_patterns:
-        - cloud_dev
-      allowed_actions:
-        # so to allow creating dashboards
-        - kibana_all_write
-
   write_only_staging:
     reserved: false
     cluster_permissions: []
@@ -102,24 +122,6 @@ roles:
       tenant_patterns:
         - cloud
   
-  read_only_staging:
-    reserved: false
-    cluster_permissions: []
-    index_permissions:
-    - index_patterns:
-        - "k8s_logs_staging_*_cluster*"
-        - "trivy_logs_staging_*_cluster*"
-      allowed_actions:
-        - "indices:data/write/*"
-        - "indices:data/read/*"
-        - "indices:admin/*"
-    tenant_permissions: 
-      tenant_patterns:
-        - cloud
-      allowed_actions:
-        # so to allow creating dashboards
-        - kibana_all_write
-  
   write_only_prod:
     reserved: false
     cluster_permissions: []
@@ -135,24 +137,6 @@ roles:
     tenant_permissions: 
       tenant_patterns:
         - cloud
-  
-  read_only_prod:
-    reserved: false
-    cluster_permissions: []
-    index_permissions:
-    - index_patterns:
-        - "k8s_logs_prod_*_cluster*"
-        - "trivy_logs_prod_*_cluster*" 
-      allowed_actions:
-        - "indices:data/write/*"
-        - "indices:data/read/*"
-        - "indices:admin/*"
-    tenant_permissions: 
-      tenant_patterns:
-        - cloud
-      allowed_actions:
-        # so to allow creating dashboards
-        - kibana_all_write
 
 rolesMapping:
   k8s_log_writer_dev:
@@ -174,20 +158,19 @@ rolesMapping:
       - log_writer_prod
     description: "map prod log writer role"
   
+  # user role mappings
+  # dev role-mapping - accessing dev cluster logs available to everyone in team
   k8s_dev:
     backend_roles:
-      - read_only_dev
-      - stfc-cloud-dev
-    user: 
-      - log_writer_dev
+      - dev_user
+      - stfc-cloud/team
     description: "map dev users to dev read role"
+  
+  # prod role-mapping - accessing prod/staging cluster logs available to admins
   k8s_prod:
     backend_roles:
-      - read_only_staging
-      - read_only_prod
-      - read_only_dev
-      - stfc-cloud/team
-    user: 
-      - log_writer_dev
+      - prod_user
+      - dev_user
+      - stfc-cloud/admins
     description: "map cloud team users to all read roles"
     
