@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Values.env }}-cloud-chatops-config
-  namespace: cloud-chatops
+  namespace: {{ .Release.namespace }}
 data:
   config.yml: |-
     users:
