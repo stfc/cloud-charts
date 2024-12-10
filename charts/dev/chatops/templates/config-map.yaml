@@ -5,11 +5,11 @@ metadata:
   namespace: cloud-chatops
 data:
   config.yml: |
-  ---
-  users:
-  {{ - range .Values.secrets.users }}
-    - real_name: {{ .name | quote }}
-      github_name: {{ .githubName | quote }}
-      slack_id: {{ .slackID | quote }}
-  {{ - end }}
-  repos: {{ toYaml .Values.repos | ndindent 2 }}
+    ---
+    users:
+    {{- range .Values.secrets.users }}
+      - real_name: {{ .name | quote }}
+        github_name: {{ .githubName | quote }}
+        slack_id: {{ .slackID | quote }}
+    {{- end }}
+    repos: {{ toYaml .Values.repos | nindent 2 }}
