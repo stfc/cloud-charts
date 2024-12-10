@@ -4,11 +4,10 @@ metadata:
   name: {{ .Values.env }}-cloud-chatops-config
   namespace: cloud-chatops
 data:
-  config.yml: |
-    ---
+  config.yml: |-
     users:
     {{- range .Values.secrets.users }}
-      - real_name: {{ .name | quote }}
+      - real_name: {{ .realName | quote }}
         github_name: {{ .githubName | quote }}
         slack_id: {{ .slackID | quote }}
     {{- end }}

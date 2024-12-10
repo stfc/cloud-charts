@@ -39,5 +39,3 @@ spec:
       - name: cloud-chatops-secrets
         secret:
           secretName: {{ .Values.env }}-cloud-chatops-secrets
-
-
