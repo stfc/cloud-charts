@@ -11,4 +11,4 @@ data:
         github_name: {{ .githubName | quote }}
         slack_id: {{ .slackID | quote }}
     {{- end }}
-    repos: {{ toYaml .Values.repos | nindent 2 }}
+    repos: {{ toYaml .Values.repos | nindent 6 }}
