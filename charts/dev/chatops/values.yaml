@@ -3,4 +3,4 @@ app: cloud-chatops
 replicaCount: 1
 image:
   repository: harbor.stfc.ac.uk/stfc-cloud-staging/cloud-chatops
-  tag: 070feed
+  tag: 729310e
