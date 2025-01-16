@@ -2,5 +2,5 @@ env: dev
 app: cloud-chatops
 replicaCount: 1
 image:
-  repository: harbor.stfc.ac.uk/stfc-cloud/cloud-chatops
-  tag: 5.0.2
+  repository: harbor.stfc.ac.uk/stfc-cloud-staging/cloud-chatops
+  tag: 070feed
