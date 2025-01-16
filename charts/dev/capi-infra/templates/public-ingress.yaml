@@ -1,0 +1,40 @@
+{{- if index .Values "public-ingress" "enabled" "true" -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: self-signed
+    meta.helm.sh/release-name: chatops
+    meta.helm.sh/release-namespace: chatops
+  generation: 1
+  labels:
+    app.kubernetes.io/instance: chatops
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: chatops
+    app.kubernetes.io/version: 6.0.0
+    helm.sh/chart: chatops
+  name: chatops-ingress
+  namespace: chatops
+
+spec:
+  ingressClassName: ingress-nginx-controller-public
+  rules:
+  - host: dev-cloud-chatops.nubes.stfc.ac.uk
+    http:
+      paths:
+      - backend:
+          service:
+            name: chatops
+            port:
+              number: 3000
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - dev-cloud-chatops.nubes.stfc.ac.uk
+    secretName: tls-keypair
+status:
+  loadBalancer:
+    ingress:
+    - ip: 130.246.211.91
+{{- end }}

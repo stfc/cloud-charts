@@ -20,3 +20,6 @@ repos:
     - cloud-helm-charts
     - openstack-query-library
 channel: C07QX38AR5W
+
+public-ingress:
+  enabled: true

@@ -1,0 +1,53 @@
+{{- if index .Values "public-ingress" "enabled" "true" -}}
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+  finalizers:
+  - service.kubernetes.io/load-balancer-cleanup
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: ingress-nginx-public
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/version: 1.11.3
+    helm.sh/chart: ingress-nginx-4.11.3
+  name: ingress-nginx-controller-public
+  namespace: ingress-nginx
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.10.229.200
+  clusterIPs:
+  - 10.10.229.200
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  loadBalancerIP: 130.246.211.91
+  ports:
+  - appProtocol: http
+    name: http
+    nodePort: 30080
+    port: 80
+    protocol: TCP
+    targetPort: http
+  - appProtocol: https
+    name: https
+    nodePort: 30443
+    port: 443
+    protocol: TCP
+    targetPort: https
+  selector:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx-public
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - ip: 130.246.211.91
+      ipMode: VIP
+{{- end }}
